@@ -2,13 +2,12 @@
 
 Метод предназначен для отправки ранее созданного документа на платформе (черновика).
 
-``PUT /sendDocuments```
+```PUT /sendDocuments```
 
-### Запрос 
+## Запрос 
 
 ### URL запроса 
-```
-https://capi-test.ediweb.ru/edi/api/v1.1/sendDocuments?id_type=gln&org_id=2000000009994&doc_id=116315454```
+```https://capi-test.ediweb.ru/edi/api/v1.1/sendDocuments?id_type=gln&org_id=2000000009994&doc_id=116315454```
 
 ### Параметры запроса
 - `id_type`*
@@ -24,6 +23,8 @@ https://capi-test.ediweb.ru/edi/api/v1.1/sendDocuments?id_type=gln&org_id=200000
   **Описание:** Идентификатор документа в системе CorePlat.  
 
 * Обязательный параметр
+
+## Ответ
 
 ### Формат ответа
 
