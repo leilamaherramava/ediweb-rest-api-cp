@@ -1,0 +1,152 @@
+# Получение контента EDI-документа
+
+Метод предназначен для получения контента документа.  
+Общий запрос без дифференцирования по типам документов на платформе.
+
+```GET /getDocument```
+
+## Запрос 
+
+### URL запроса 
+```https://capi-test.ediweb.ru/edi/api/v1.1/getDocument?id_type=gln&org_id=2000000009994&doc_id=103940815&signed_doc=false```
+
+### Параметры запроса
+- `id_type`*
+  **Пример значения:** `gln` 
+  **Описание:** Тип идентификатора организации. Принимает значения: `gln` или `fns`
+
+- `org_id`*
+  **Пример значения:** `2000000009994` 
+  **Описание:** Идентификатор организации-инициатора запроса (`gln`)
+
+- `doc_id`*
+  **Пример значения:** `103940815` 
+  **Описание:** Идентификатор документа в системе CorePlat 
+
+- `signed_doc`*
+  **Пример значения:** `false` 
+  **Описание:** Признак подписанного документа, может принимать значения `true` или `false`. Не применяется для EDI-документов.
+
+*Обязательный параметр
+
+## Ответ 
+
+### Формат ответа
+
+Если запрос обработан без ошибок, API возвращает код ответа `200`. Если запрос вызвал ошибку, возвращается соответствующий код ошибки и описание проблемы.
+
+### Тело ответа
+```
+<?xml version="1.0" encoding="UTF-8"?>
+<Document-Order> 
+
+ <Document-Header>
+        <DocumentReceiveDateTime>2020-03-31T14:22:33</DocumentReceiveDateTime>
+        <DocumentID>103719845</DocumentID> 
+
+ </Document-Header>
+    <Order-Header> 
+
+ <OrderNumber>02-04</OrderNumber>
+        <OrderDate>2020-04-02</OrderDate>
+        <OrderCurrency>RUB</OrderCurrency>
+        <DocumentFunctionCode>9</DocumentFunctionCode>
+        <DocumentNameCode>220</DocumentNameCode> 
+
+ </Order-Header>
+    <Order-Parties>
+        <Buyer> 
+
+ <ILN>2000000007705</ILN>
+            <Name>TEST_CUSTOMER</Name>
+            <TaxID>9999999999</TaxID>
+            <UtilizationRegisterNumber>9999999999999</UtilizationRegisterNumber>
+            <Country>RU</Country> 
+
+ </Buyer>
+        <Seller> 
+
+ <ILN>2000000009994</ILN>
+            <Name>TEST_SUPPLIER</Name>
+            <TaxID>8888888888</TaxID>
+            <UtilizationRegisterNumber>8888888888888</UtilizationRegisterNumber>
+            <Country>RU</Country> 
+
+ </Seller>
+        <DeliveryPoint> 
+
+ <ILN>2000000007705</ILN>
+            <Name>TEST_CUSTOMER</Name>
+            <TaxID>9999999999</TaxID>
+            <UtilizationRegisterNumber>9999999999999</UtilizationRegisterNumber>
+            <Country>RU</Country> 
+
+ </DeliveryPoint>
+        <ShipFrom> 
+
+ <ILN>2000000007705</ILN>
+            <Name>TEST_CUSTOMER</Name>
+            <TaxID>9999999999</TaxID>
+            <UtilizationRegisterNumber>9999999999999</UtilizationRegisterNumber>
+            <Country>RU</Country> 
+
+ </ShipFrom>
+        <UltimateCustomer> 
+
+ <ILN>2000000007705</ILN>
+            <Name>TEST_CUSTOMER</Name>
+            <TaxID>9999999999</TaxID>
+            <UtilizationRegisterNumber>9999999999999</UtilizationRegisterNumber>
+            <Country>RU</Country> 
+
+ </UltimateCustomer>
+    </Order-Parties> 
+
+ <Order-Lines>
+        <Line> 
+
+ <Line-Item>
+                <LineNumber>1</LineNumber>
+                <ItemType>CU</ItemType>
+                <OrderedQuantity>12.000</OrderedQuantity>
+                <UnitOfMeasure>PCE</UnitOfMeasure>
+                <OrderedNetAmount>0.0000</OrderedNetAmount>
+                <TaxRate>20</TaxRate> 
+
+ </Line-Item>
+            <Line-Reference> 
+
+ <Reference-Elements>
+                    <Reference-Element> 
+
+<Reference-Type>spc</Reference-Type>
+ </Reference-Element>
+                </Reference-Elements> 
+
+ </Line-Reference>
+        </Line> 
+
+ </Order-Lines>
+    <Order-Summary> 
+
+ <TotalLines>1</TotalLines>
+        <TotalOrderedAmount>12.000</TotalOrderedAmount>
+        <TotalNetAmount>0.0000</TotalNetAmount>
+        <TotalGrossAmount>0.0000</TotalGrossAmount> 
+
+ </Order-Summary>
+</Document-Order>
+```
+
+### Заголовки ответа
+```
+{
+  "connection": "keep-alive",
+  "content-length": "1982",
+  "content-type": "text/plain; charset=UTF-8",
+  "date": "Fri, 03 Apr 2020 12:14:37 GMT",
+  "doc_id": "103940815",
+  "request_uuid": "d682a0b0-2676-42b2-9776-a8fa85d05b93",
+  "server": "nginx" 
+}
+```
