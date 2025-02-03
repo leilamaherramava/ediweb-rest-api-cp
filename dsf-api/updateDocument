@@ -1,1 +1,113 @@
+# Обновление ДСФ 
 
+Метод предназначен для обновления созданного ранее документа.  
+Общий запрос без дифференцирования по типам документов на платформе.
+
+```PUT /updateDocument```
+
+## Запрос 
+
+### URL запроса 
+```
+https://capi-test.ediweb.ru/edi/api/v1.1/updateDocument?
+id_type=gln&org_id=2000000009994&doc_id=116387875&file_name=%D1%82%D0%B5%D1%81%D1%82%D0%BE%D0%B2%D1%8B%
+D0%B9%20%D0%B4%D1%81%D1%84.jpeg 
+```
+
+### Параметры запроса
+- `id_type`*
+  **Пример значения:** `gln` 
+  **Описание:** Тип идентификатора организации. Принимает значения: `gln` или `fns`
+  
+- `org_id`*
+  **Пример значения:** `2000000009994` 
+  **Описание:** Идентификатор организации-инициатора запроса (`gln`)
+  
+ - `doc_id`*
+  **Пример значения:** `116387875` 
+  **Описание:** Идентификатор документа на платформе CorePlat 
+ 
+ - `file_name`
+  **Пример значения:** `тестовый дсф.jpeg` 
+  **Описание:** Имя файла
+
+*Обязательный параметр
+
+В теле запроса передаются данные в кодировке base64, которые необходимо обновить в соответствующем документе. Содержание данных должно соответствовать схеме соответствующего документа. Данным запросом можно изменить или расширить контент документа.
+
+## Ответ 
+
+### Формат ответа
+
+Если запрос обработан без ошибок, API возвращает код ответа `200`. Если запрос вызвал ошибку, возвращается соответствующий код ошибки и описание проблемы.
+
+### Тело ответа
+В теле ответа возвращается контент метаданных. 
+```
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<DocumentFreeFormat> 
+
+ <date>2020-07-17T00:00:00Z</date>
+    <number></number>
+    <file documentDate="2020-07-17T08:46:50.470Z" documentSenderNumber="" 
+
+ fileId="2088e7d0-970d-43c3-9a3e-84329f43a1a3" filename=" .jpeg" 
+
+ hex="d9bd2b2643333541ac78f17c277b1c99fb515ba9" name=" .jpeg"/>
+    <sender fns_id="2IJAAC306AEBBF84A99841542A3AFD12494" iln="2000000009994"> 
+
+ <address>
+            <russianAddress home="b" street="dvb"/> 
+
+ </address>
+        <identification> 
+
+ <legalEntity inn="8888888888" kpp="888888888">
+                <name>TEST_SUPPLIER</name> 
+
+ </legalEntity>
+        </identification> 
+
+ </sender>
+    <receiver fns_id="2IJ5390D2B5A1E842FE9244528576B450AD" iln="2000000007705"> 
+
+ <address>
+            <russianAddress home="dfv" street="dcfv"/> 
+
+ </address>
+        <identification> 
+
+ <legalEntity inn="9999999999" kpp="999999999">
+                <name>TEST_CUSTOMER</name> 
+
+ </legalEntity>
+        </identification> 
+
+ </receiver>
+    <timeProcess>2020-07-17T08:46:50.206Z</timeProcess>
+    <reference> 
+
+ <guid>2088e7d0-970d-43c3-9a3e-84329f43a1a3</guid>
+    </reference> 
+
+ <payment>
+        <prepayment>false</prepayment> 
+
+ </payment>
+</DocumentFreeFormat>
+```
+
+### Заголовки ответа
+```
+{
+  "connection": "keep-alive",
+  "content-length": "1093",
+  "content-type": "text/plain; charset=UTF-8",
+  "date": "Fri, 17 Jul 2020 09:01:56 GMT",
+  "doc_id": "116387875",
+  "file_name": "0YLQtdGB0YLQvtCy0YvQuSDQtNGB0YQuanBlZw==",
+  "request_uuid": "2ba9f70d-193b-481e-a20a-a356f458afb3",
+  "server": "nginx" 
+
+}
+```
